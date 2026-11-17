@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تحدي البومب - شعار UCMAS</title>
+<style>
+  @import url('https://fonts.cdnfonts.com/css/habeba');
+  @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@800&display=swap');
+  
+  * { -webkit-tap-highlight-color: transparent; outline: none; user-select: none; box-sizing: border-box; }
+  
+  body { 
+      margin: 0; 
+      padding: 0; 
+      background: #0f172a; 
+      font-family: 'Habeba', sans-serif; 
+      color: white; 
+      height: 100vh; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      justify-content: flex-start; /* رفع اللعبة للأعلى لتلامس الحد المطلوب */
+      padding-top: 55px;
+      position: relative;
+  }
+  
+  /* فيديو الخلفية العام بطيء وهادئ */
+  .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+      transform: scale(1.4);
+      filter: brightness(0.65);
+  }
+  
+  .main-wrapper {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+      position: relative;
+      z-index: 2;
+  }
+
+  /* الشعار الكبير محصور تماماً داخل المربع الأبيض المرسوم في الصورة وبنفس الحجم والموقع */
+  .logo-img-container {
+      position: fixed;
+      top: 15px;
+      left: 20px;
+      width: 185px;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 35;
+      pointer-events: none;
+      animation: logoPulseGlow 3s ease-in-out infinite;
+  }
+
+  .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: screen; /* لإزالة الخلفية السوداء ودمج الشعار بسلاسة */
+      filter: drop-shadow(0 0 10px rgba(0,255,204,0.8));
+  }
+
+  @keyframes logoPulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(0,255,204,0.6)); opacity: 0.95; }
+      50% { transform: scale(1.06); filter: drop-shadow(0 0 16px rgba(255,215,0,0.95)); opacity: 1; }
+  }
+
+  .top-frame { width: 100%; margin-bottom: 25px; }
+  
+  .top-bar { 
+      height: 85px; 
+      background: transparent !important; 
+      backdrop-filter: none !important; 
+      border: none; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 4px; 
+      position: relative; 
+      width: 100%;
+  }
+
+  .bomb-ball-left { position: absolute; left: 10px; top: 6px; width: 14px; height: 14px; background: radial-gradient(circle at 30% 30%, #ff4d4d, #cc0000); border-radius: 50%; box-shadow: 0 0 10px #ff0000; z-index: 25; }
+  .bomb-ball-right { position: absolute; right: 10px; top: 6px; width: 14px; height: 14px; background: radial-gradient(circle at 30% 30%, #ff4d4d, #cc0000); border-radius: 50%; box-shadow: 0 0 10px #ff0000; z-index: 25; }
+
+  .hud-top-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 25px;
+      align-items: center;
+  }
+
+  .floating-container {
+      animation: subtleFloat 4s ease-in-out infinite;
+      position: relative;
+      z-index: 10;
+  }
+  .floating-container.alt {
+      animation: subtleFloatAlt 4.5s ease-in-out infinite;
+  }
+
+  @keyframes subtleFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(1deg); }
+  }
+  @keyframes subtleFloatAlt {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(3px) rotate(-1deg); }
+  }
+
+  .hud-bottom-row {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+  }
+
+  .hud-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #1e293b, #09090b);
+      border: 3.5px solid gold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(255,215,0,0.3);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+  }
+  .hud-circle:active { transform: scale(0.95); }
+
+  .hud-center-circle {
+      width: 78px;
+      height: 78px;
+      border: 4px solid #00ffcc;
+      background: radial-gradient(circle at 30% 30%, #06261f, #000);
+      box-shadow: 0 0 25px rgba(0,255,204,0.6);
+      cursor: default;
+  }
+
+  .mini-badge {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      background: #0f172a;
+      border: 2px solid gold;
+      border-radius: 50%;
+      color: gold;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 24px;
+      z-index: 40;
+      pointer-events: auto;
+  }
+  .hud-left-badge { right: -12px; }
+  .hud-right-badge { left: -12px; }
+
+  .game-started .mini-badge { pointer-events: none; }
+
+  .mini-badge input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: gold;
+      font-family: 'Habeba', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      outline: none;
+  }
+
+  .hud-value { font-size: 32px; color: white; font-weight: 900; line-height: 1; text-shadow: 0 0 12px rgba(255,255,255,0.8); }
+  .hud-center-val { font-size: 36px; color: #00ffcc; text-shadow: 0 0 18px rgba(0,255,204,0.9); }
+
+  .pulse-anim { animation: numPulse 0.3s ease; }
+  @keyframes numPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); color: #00ffcc; }
+      100% { transform: scale(1); }
+  }
+
+  .active-team-glow {
+      transform: scale(1.75) !important;
+      border-color: #00ffcc !important;
+      box-shadow: 0 0 35px rgba(0,255,204,0.6) !important;
+      z-index: 50;
+  }
+  .active-team-glow .mini-badge {
+      border-color: #00ffcc !important;
+      color: #00ffcc !important;
+  }
+  .active-team-glow .mini-badge input { color: #00ffcc !important; }
+
+  .active-team-glow::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #ffffff;
+      border-right-color: rgba(255,255,255,0.4);
+      animation: cometSpin 1.2s linear infinite;
+      pointer-events: none;
+  }
+  @keyframes cometSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  .game-frame { width: 100%; background: transparent; display: flex; justify-content: center; align-items: center; }
+
+  .game-area { width: 100%; display: flex; justify-content: center; align-items: center; }
+  
+  .grid-container { 
+      display: grid; 
+      gap: 10px; 
+      width: 100%; 
+      grid-template-columns: repeat(5, 1fr); 
+      padding: 5px; 
+  }
+  
+  .square { 
+      background: linear-gradient(135deg, #14532d 0%, #4ade80 100%); 
+      border-radius: 12px; 
+      border: 2.5px solid #166534; 
+      position: relative; 
+      cursor: pointer; 
+      transform-style: preserve-3d; 
+      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); 
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      aspect-ratio: 1.15 / 1; 
+  }
+  
+  .square::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 1.5px solid rgba(212, 175, 55, 0.9);
+      border-radius: 9px;
+      pointer-events: none;
+  }
+  .square::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      border-radius: 7px;
+      pointer-events: none;
+  }
+
+  .square:hover { border-color: gold; }
+  
+  .outer-num { color: #052e16; font-size: 34px; font-weight: 900; z-index: 2; text-shadow: none; }
+  
+  .inner-face { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 900; transform: rotateY(180deg); backface-visibility: hidden; border-radius: 10px; text-shadow: none; }
+  
+  .square.open .outer-num { display: none; }
+  .square.open { transform: rotateY(180deg); border-color: gold; }
+  
+  .bg-white-special { background: #ffffff !important; color: #0f172a !important; border: 2.5px solid #00f2ff !important; } 
+  .bg-red { background: #991b1b !important; color: #fca5a5 !important; } 
+  .bg-green { background: #166534 !important; color: #86efac !important; } 
+  .bg-blue { background: #1e40af !important; color: #93c5fd !important; } 
+  .bg-yellow { background: #854d0e !important; color: #fde047 !important; } 
+  .bg-purple { background: #581c87 !important; color: #d8b4fe !important; }
+  
+  .square.shatter { animation: shatterAnim 0.7s forwards; pointer-events: none; }
+  @keyframes shatterAnim { 0% { transform: rotateY(180deg) scale(1); opacity: 1; } 100% { transform: rotateY(180deg) scale(0) rotate(15deg); opacity: 0; } }
+  .shake { animation: shakeAnim 0.6s both; }
+  @keyframes shakeAnim { 10%, 90% { transform: translate3d(-3px, 0, 0); } 20%, 80% { transform: translate3d(5px, 0, 0); } }
+
+  #winnerModal {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+  }
+  #winnerModal.show {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  .winner-card {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      border: 4px solid gold;
+      border-radius: 25px;
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+      animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes winnerPop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+  }
+  .winner-title {
+      font-family: 'Almarai', sans-serif;
+      font-size: 32px;
+      color: gold;
+      text-shadow: 0 0 15px rgba(255,215,0,0.8);
+      margin-bottom: 15px;
+      font-weight: 900;
+  }
+  .winner-name {
+      font-size: 45px;
+      color: #00ffcc;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(0,255,204,0.8);
+  }
+  .winner-score {
+      font-size: 26px;
+      color: white;
+      margin-bottom: 25px;
+      font-weight: 900;
+  }
+  .restart-btn {
+      padding: 12px 30px;
+      background: linear-gradient(135deg, gold, #b38728);
+      color: #000;
+      font-family: 'Habeba', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+      transition: 0.2s;
+  }
+  .restart-btn:active { transform: scale(0.95); }
+
+  #bombOverlay {
+      position: fixed;
+      inset: 0;
+      background: transparent;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+  }
+  #bombOverlay.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: shockwaveExpand 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  }
+  @keyframes shockwaveExpand {
+      0% {
+          background: radial-gradient(circle, rgba(255,0,0,0.7) 0%, rgba(255,0,0,0.3) 20%, transparent 40%);
+          transform: scale(0.2);
+      }
+      50% {
+          background: radial-gradient(circle, rgba(255,50,50,0.5) 0%, rgba(255,0,0,0.2) 50%, transparent 80%);
+          transform: scale(1.5);
+      }
+      100% {
+          background: radial-gradient(circle, transparent 0%, transparent 100%);
+          transform: scale(3);
+          opacity: 0;
+      }
+  }
+  .giant-bomb-icon {
+      font-size: 100px;
+      animation: bombPopScale 0.6s ease alternate infinite;
+      filter: drop-shadow(0 0 20px #ff0000);
+  }
+  @keyframes bombPopScale {
+      0% { transform: scale(0.8); }
+      100% { transform: scale(1.2); }
+  }
+</style>
+</head>
+<body onclick="playVideo(); initAudio(); tryFS();">
+
+<!-- فيديو الخلفية العام بالاسم الجديد -->
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="YouCut_20261117_213738361.mp4" type="video/mp4">
+    متصفحك لا يدعم تشغيل الفيديو.
+</video>
+
+<!-- الشعار الكبير بالصورة والاسم الجديد في المكان المحدد -->
+<div class="logo-img-container">
+    <img src="1794938007565.png" alt="UCMAS Logo" class="logo-img">
+</div>
+
+<div id="bombOverlay">
+    <div class="giant-bomb-icon">💣</div>
+</div>
+
+<div class="main-wrapper">
+  <div class="top-frame" id="p1">
+    <div class="top-bar" id="topBarContainer">
+      <div id="bombLeft" class="bomb-ball-left"></div>
+      <div id="bombRight" class="bomb-ball-right"></div>
+      
+      <div class="hud-top-row">
+          <div class="floating-container">
+              <div class="hud-circle" id="hudLeft" onclick="undoSquare()" title="تراجع">
+                  <div class="mini-badge hud-left-badge"><input type="text" maxlength="1" value="1" onclick="event.stopPropagation()"></div>
+                  <div class="hud-value" id="scoreLeft">0</div>
+              </div>
+          </div>
+
+          <div class="floating-container alt">
+              <div class="hud-circle" id="hudRight" onclick="handleRightAction()" title="اسحب">
+                  <div class="mini-badge hud-right-badge"><input type="text" maxlength="1" value="2" onclick="event.stopPropagation()"></div>
+                  <div class="hud-value" id="scoreRight">0</div>
+              </div>
+          </div>
+      </div>
+
+      <div class="hud-bottom-row">
+          <div class="hud-circle hud-center-circle" onclick="startNewGame()" title="إعادة اللعبة">
+              <div class="hud-value hud-center-val" id="currentSum">0</div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-frame" id="p2">
+    <div class="game-area">
+        <div class="grid-container" id="gameGrid"></div>
+        
+        <div id="winnerModal">
+            <div class="winner-card">
+                <div class="winner-title">🏆 انتهت اللوحة! الفائز بالمركز الأول 🏆</div>
+                <div class="winner-name" id="winnerText">فريق 1</div>
+                <div class="winner-score" id="winnerScore">السكور: 0</div>
+                <button class="restart-btn" onclick="startNewGame()">لعبة جديدة</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+   const fullStandardNumericPool = [];
+   const colorsList = ['bg-red', 'bg-green', 'bg-blue', 'bg-yellow', 'bg-purple'];
+   
+   for(let val = 9; val >= 1; val--) {
+       colorsList.forEach(col => {
+           fullStandardNumericPool.push({t: 'n', v: val, c: col});
+       });
+   }
+
+  let currentTurnHistory = [];  
+  let teams = [
+      { id: 0, name: 'فريق 1', score: 0 },
+      { id: 1, name: 'فريق 2', score: 0 }
+  ]; 
+  let currentTeamIdx = 0, turnPicks = [], isProcessing = false, audioCtx, ballsCount = 2;
+  let openedSquaresCount = 0; 
+
+  window.onload = function() {
+      playVideo();
+      startNewGame();
+  };
+
+  function playVideo() {
+      const vid = document.getElementById('bgVideo');
+      if (vid) {
+          vid.playbackRate = 0.25; 
+          vid.muted = true;
+          vid.play().catch(err => console.log(err));
+      }
+  }
+
+  function updateSum() { 
+      let total = 0; 
+      turnPicks.forEach((p) => { 
+          if (p.t === 'n') {
+              total += p.v; 
+          } else if (p.t === 'x') {
+              if (total > 0) {
+                  total *= p.v;
+              }
+          }
+      }); 
+      
+      const sumDisplay = document.getElementById('currentSum');
+      if (sumDisplay) {
+          sumDisplay.innerText = total;
+          sumDisplay.classList.add('pulse-anim');
+          setTimeout(() => sumDisplay.classList.remove('pulse-anim'), 300);
+      }
+  }
+
+  function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+  function tryFS() { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); }
+
+  function startNewGame() {
+      playVideo();
+      const grid = document.getElementById('gameGrid');
+      if(grid) {
+          grid.innerHTML = ''; 
+          grid.style.display = 'none'; 
+          grid.offsetHeight; 
+          grid.style.display = 'grid'; 
+      }
+
+      currentTurnHistory = [];
+      turnPicks = [];
+      isProcessing = false;
+      currentTeamIdx = 0; 
+      ballsCount = 2; 
+      openedSquaresCount = 0;
+
+      const bar = document.getElementById('topBarContainer');
+      if(bar) bar.classList.remove('game-started');
+
+      teams = [
+          { id: 0, name: 'فريق 1', score: 0 },
+          { id: 1, name: 'فريق 2', score: 0 }
+      ];
+
+      const bLeft = document.getElementById('bombLeft');
+      const bRight = document.getElementById('bombRight');
+      if(bLeft) bLeft.style.display = 'block';
+      if(bRight) bRight.style.display = 'block';
+
+      const overlay = document.getElementById('bombOverlay');
+      if(overlay) overlay.classList.remove('show');
+
+      const winnerModal = document.getElementById('winnerModal');
+      if(winnerModal) winnerModal.classList.remove('show');
+
+      setupGrid(30, 2); 
+      renderTeamsHUD(); 
+      updateSum();
+  }
+
+  function renderTeamsHUD() {
+      if (teams.length < 2) return;
+
+      const scoreLeft = document.getElementById('scoreLeft');
+      const hudLeft = document.getElementById('hudLeft');
+
+      const scoreRight = document.getElementById('scoreRight');
+      const hudRight = document.getElementById('hudRight');
+
+      scoreLeft.innerText = teams[0].score;
+      scoreRight.innerText = teams[1].score;
+
+      hudLeft.classList.toggle('active-team-glow', currentTeamIdx === 0);
+      hudRight.classList.toggle('active-team-glow', currentTeamIdx === 1);
+  }
+
+  function handleRightAction() {
+      playVideo();
+      if (isProcessing || turnPicks.length === 0) return;
+
+      const bar = document.getElementById('topBarContainer');
+      if(bar) bar.classList.add('game-started');
+
+      let totalScore = 0;
+      turnPicks.forEach((p, index) => {
+          if (p.t === 'n') totalScore += p.v;
+          else if (p.t === 'x' && index > 0) totalScore *= p.v;
+      });
+
+      teams[currentTeamIdx].score += totalScore;
+      
+      const activeScoreEl = currentTeamIdx === 0 ? document.getElementById('scoreLeft') : document.getElementById('scoreRight');
+      if(activeScoreEl) {
+          activeScoreEl.classList.add('pulse-anim');
+          setTimeout(() => activeScoreEl.classList.remove('pulse-anim'), 300);
+      }
+
+      isProcessing = true; 
+      resetTurn();
+  }
+
+  function setupGrid(total, bombs) {
+      const grid = document.getElementById('gameGrid');
+      if(!grid) return;
+      grid.innerHTML = '';
+      isProcessing = false; 
+      turnPicks = []; 
+      currentTurnHistory = [];
+      
+      let cols = 5;
+      let rows = total / cols; 
+
+      let specialItems = [];
+      for(let i = 0; i < bombs; i++) specialItems.push({t: 'b', v: 0, c: 'bg-white-special'});
+      for(let i = 0; i < 3; i++) specialItems.push({t: 'x', v: 2, c: 'bg-white-special'});
+      for(let i = 0; i < 2; i++) specialItems.push({t: 'x', v: 3, c: 'bg-white-special'});
+
+      let availablePool = [...fullStandardNumericPool];
+      shuffleArray(availablePool);
+
+      let selectedNumerics = [];
+      while(selectedNumerics.length < (total - specialItems.length) && availablePool.length > 0) {
+          selectedNumerics.push(availablePool.pop());
+      }
+
+      let allItems = [...selectedNumerics, ...specialItems];
+      shuffleArray(allItems);
+
+      let gridMatrix = Array(rows).fill(null).map(() => Array(cols).fill(null));
+      
+      allItems.forEach(item => {
+          let placed = false;
+          let attempts = 0;
+          while(!placed && attempts < 100) {
+              let r = Math.floor(Math.random() * rows);
+              let c = Math.floor(Math.random() * cols);
+              if(gridMatrix[r][c] === null) {
+                  let hasNeighborConflict = false;
+                  if(item.t === 'n') {
+                      for(let dr = -1; dr <= 1; dr++) {
+                          for(let dc = -1; dc <= 1; dc++) {
+                              let nr = r + dr, nc = c + dc;
+                              if(nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+                                  let neighbor = gridMatrix[nr][nc];
+                                  if(neighbor && neighbor.t === 'n' && (neighbor.c === item.c || neighbor.v === item.v)) {
+                                      hasNeighborConflict = true;
+                                  }
+                              }
+                          }
+                      }
+                  }
+                  if(!hasNeighborConflict || attempts > 50) {
+                      gridMatrix[r][c] = item;
+                      placed = true;
+                  }
+              }
+              attempts++;
+          }
+      });
+
+      let pool = [];
+      gridMatrix.forEach(row => row.forEach(cell => {
+          if(cell) pool.push(cell);
+          else pool.push(availablePool.pop() || {t: 'n', v: 1, c: 'bg-red'});
+      }));
+
+      grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+      pool.forEach((d, i) => {
+          const sq = document.createElement('div');
+          sq.className = 'square';
+          sq.id = 'sq-' + i;
+          sq.innerHTML = `<span class="outer-num">${i+1}</span><div class="inner-face ${d.c}">${(d.t==='b'?'💣':(d.t==='x'?'x'+d.v:d.v))}</div>`;
+          
+          sq.onclick = () => {
+              playVideo();
+              if(isProcessing || sq.classList.contains('open')) return;
+              
+              const bar = document.getElementById('topBarContainer');
+              if(bar) bar.classList.add('game-started');
+
+              sq.classList.add('open');
+              openedSquaresCount++; 
+
+              currentTurnHistory.push({ id: sq.id, data: d, teamIdx: currentTeamIdx, scoreBefore: teams[currentTeamIdx].score });
+              
+              if(d.t === 'b') { 
+                  isProcessing = true; 
+                  setTimeout(() => triggerExplosion(), 400); 
+              } else if(turnPicks.some(p => (p.c === d.c && p.t === 'n' && d.t === 'n') || (p.v === d.v && p.t === 'n' && d.t === 'n'))) {
+                  isProcessing = true; 
+                  turnPicks = []; 
+                  setTimeout(resetTurn, 1000);
+              } else { 
+                  turnPicks.push(d); 
+                  updateSum(); 
+              }
+
+              if (openedSquaresCount >= 30) {
+                  setTimeout(() => checkWinner(), 800);
+              }
+          };
+          grid.appendChild(sq);
+      });
+  }  
+
+  function checkWinner() {
+      const winnerModal = document.getElementById('winnerModal');
+      const winnerText = document.getElementById('winnerText');
+      const winnerScore = document.getElementById('winnerScore');
+
+      let winner = teams[0];
+      if (teams[1].score > teams[0].score) {
+          winner = teams[1];
+      } else if (teams[1].score === teams[0].score) {
+          winnerText.innerText = "تعادل بين الفريقين!";
+          winnerScore.innerText = `النقاط: ${winner.score}`;
+          if(winnerModal) winnerModal.classList.add('show');
+          return;
+      }
+
+      let inputLeft = document.querySelector('.hud-left-badge input');
+      let inputRight = document.querySelector('.hud-right-badge input');
+      let name1 = inputLeft ? inputLeft.value : 'فريق 1';
+      let name2 = inputRight ? inputRight.value : 'فريق 2';
+      let winnerNameStr = winner.id === 0 ? name1 : name2;
+
+      winnerText.innerText = `الفائز: ${winnerNameStr}`;
+      winnerScore.innerText = `السكور النهائي: ${winner.score}`;
+
+      if(winnerModal) winnerModal.classList.add('show');
+  }
+
+  function undoSquare() {
+      playVideo();
+      if (currentTurnHistory.length === 0) return;
+
+      let lastMove = currentTurnHistory.pop();
+      let sq = document.getElementById(lastMove.id);
+
+      if (sq) {
+          sq.classList.remove('open', 'shatter');
+          sq.style.opacity = '1';
+          openedSquaresCount--; 
+      }
+
+      teams[lastMove.teamIdx].score = lastMove.scoreBefore;
+      currentTeamIdx = lastMove.teamIdx;
+
+      if (turnPicks.length > 0) {
+          turnPicks.pop();
+      }
+
+      updateSum();
+      renderTeamsHUD();
+  }
+
+  function resetTurn() { 
+      document.querySelectorAll('.square.open').forEach(el => { el.classList.add('shatter'); el.classList.remove('open'); }); 
+      turnPicks = []; 
+      currentTeamIdx = (currentTeamIdx + 1) % teams.length; 
+      updateSum(); 
+      setTimeout(() => { isProcessing = false; renderTeamsHUD(); }, 800); 
+  }
+
+  function triggerExplosion() { 
+      if(ballsCount > 0) { 
+          if(ballsCount === 2) {
+              const bLeft = document.getElementById('bombLeft');
+              if(bLeft) bLeft.style.display = 'none';
+          } else if(ballsCount === 1) {
+              const bRight = document.getElementById('bombRight');
+              if(bRight) bRight.style.display = 'none';
+          }
+          ballsCount--; 
+      } 
+      playExplosionSound(); 
+      document.body.classList.add('shake'); 
+
+      const overlay = document.getElementById('bombOverlay');
+      if(overlay) overlay.classList.add('show');
+
+      setTimeout(() => { 
+          teams[currentTeamIdx].score = 0; 
+          turnPicks = []; 
+          updateSum(); 
+          if(overlay) overlay.classList.remove('show');
+          resetTurn(); 
+      }, 900); 
+  }
+
+  function playExplosionSound() { 
+      if (!audioCtx) return; 
+      const osc = audioCtx.createOscillator(); 
+      const gain = audioCtx.createGain(); 
+      osc.type = 'sawtooth'; 
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime); 
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); 
+      osc.connect(gain); 
+      gain.connect(audioCtx.destination); 
+      osc.start(); 
+      osc.stop(audioCtx.currentTime + 0.5); 
+  }
+
+  function shuffleArray(array) {
+      const randomBuffer = new Uint32Array(1);
+      for (let i = array.length - 1; i > 0; i--) {
+          window.crypto.getRandomValues(randomBuffer);
+          let randomFraction = randomBuffer[0] / (0xffffffff + 1);
+          const j = Math.floor(randomFraction * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+  }
+</script>
+</body>
+</html>
