@@ -21,12 +21,12 @@
       display: flex; 
       flex-direction: column; 
       align-items: center;
-      justify-content: flex-start; /* رفع اللعبة للأعلى لتلامس الحد المطلوب */
+      justify-content: flex-start;
       padding-top: 55px;
       position: relative;
   }
   
-  /* فيديو الخلفية العام بطيء وهادئ */
+  /* فيديو الخلفية العام عبر الرابط الخارجي المباشر والسريع جداً */
   .bg-video {
       position: fixed;
       top: 0;
@@ -52,7 +52,7 @@
       z-index: 2;
   }
 
-  /* الشعار الكبير محصور تماماً داخل المربع الأبيض المرسوم في الصورة وبنفس الحجم والموقع */
+  /* الشعار الكبير محصور تماماً داخل المربع الأبيض وبنفس الحجم والموقع */
   .logo-img-container {
       position: fixed;
       top: 15px;
@@ -408,13 +408,13 @@
 </head>
 <body onclick="playVideo(); initAudio(); tryFS();">
 
-<!-- فيديو الخلفية العام بالاسم الجديد -->
+<!-- فيديو الخلفية العام عبر الرابط الخارجي المباشر -->
 <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="YouCut_20261117_213738361.mp4" type="video/mp4">
+    <source src="https://streamable.com/x9o0zy.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
 </video>
 
-<!-- الشعار الكبير بالصورة والاسم الجديد في المكان المحدد -->
+<!-- الشعار الكبير بالصورة في المكان المحدد -->
 <div class="logo-img-container">
     <img src="1794938007565.png" alt="UCMAS Logo" class="logo-img">
 </div>
