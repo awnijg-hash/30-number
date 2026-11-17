@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>تحدي البومب - UCMAS</title>
+<title>تحدي البومب - شعار UCMAS</title>
 <style>
   @import url('https://fonts.cdnfonts.com/css/habeba');
   @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@800&display=swap');
@@ -21,12 +21,12 @@
       display: flex; 
       flex-direction: column; 
       align-items: center;
-      justify-content: flex-start;
+      justify-content: flex-start; /* رفع اللعبة للأعلى لتلامس الحد المطلوب */
       padding-top: 55px;
       position: relative;
   }
   
-  /* فيديو الخلفية العام بالرابط الموجود في المستودع لديك */
+  /* فيديو الخلفية العام بطيء وهادئ */
   .bg-video {
       position: fixed;
       top: 0;
@@ -52,7 +52,7 @@
       z-index: 2;
   }
 
-  /* الشعار الكبير داخل المربع الأبيض وبنفس الحجم والموقع */
+  /* الشعار الكبير محصور تماماً داخل المربع الأبيض المرسوم في الصورة وبنفس الحجم والموقع */
   .logo-img-container {
       position: fixed;
       top: 15px;
@@ -408,13 +408,13 @@
 </head>
 <body onclick="playVideo(); initAudio(); tryFS();">
 
-<!-- فيديو الخلفية مربوط بالرابط الموجود في مخزنك -->
+<!-- فيديو الخلفية العام بالاسم الجديد -->
 <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="https://streamable.com/x9o0zy.mp4" type="video/mp4">
+    <source src="YouCut_20261117_213738361.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
 </video>
 
-<!-- الشعار الكبير في مكانه المضبوط بدقة -->
+<!-- الشعار الكبير بالصورة والاسم الجديد في المكان المحدد -->
 <div class="logo-img-container">
     <img src="1794938007565.png" alt="UCMAS Logo" class="logo-img">
 </div>
