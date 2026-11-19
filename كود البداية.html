@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تعليم الحساب الذهني - UCMAS</title>
+<style>
+  @import url('https://fonts.cdnfonts.com/css/habeba');
+  @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@800&display=swap');
+  
+  * { -webkit-tap-highlight-color: transparent; outline: none; user-select: none; box-sizing: border-box; }
+  
+  body { 
+      margin: 0; 
+      padding: 0; 
+      background: #0f172a; 
+      font-family: 'Habeba', sans-serif; 
+      color: white; 
+      width: 100vw;
+      height: 100vh; 
+      height: 100dvh;
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0 8px 0;
+      position: relative;
+  }
+  
+  /* فيديو الخلفية العام من نفس المجلد */
+  .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+      transform: scale(1.35);
+      filter: brightness(0.62);
+  }
+  
+  .main-wrapper {
+      width: 100%;
+      max-width: 540px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: relative;
+      z-index: 2;
+  }
+
+  /* الترويسة العلوية: العنوان والشعار وخانتا السكور يمين ويسار الشعار */
+  .brand-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      flex-shrink: 0;
+      gap: 2px;
+      position: relative;
+  }
+
+  /* الجملة العلوية */
+  .brand-title {
+      font-family: 'Almarai', sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      color: #fde047;
+      text-align: center;
+      line-height: 1.1;
+      margin-top: 12px;
+      transform: translateY(10px);
+      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.85);
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95), 0 0 16px rgba(255, 215, 0, 0.75);
+      pointer-events: none;
+      z-index: 65;
+  }
+
+  .brand-title .ucmas-code {
+      color: #00ffcc;
+      font-family: 'Almarai', sans-serif;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95), 0 0 18px rgba(0, 255, 204, 0.9);
+  }
+
+  /* صف الشعار مع خانتي السكور على اليمين واليسار */
+  .logo-scores-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      padding: 0 6px;
+      height: 82px;
+      overflow: visible;
+  }
+
+  /* حاوية الشعار: تحافظ على حجم الشعار وحركته، ومؤثر الليد النيون الخفيف مرسوم داخل حدود الشعار */
+  .logo-img-container {
+      width: 150px;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      pointer-events: none;
+      margin: 10px auto 0 auto;
+      overflow: visible;
+      position: relative;
+  }
+
+  .logo-stage {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: logoPulseGlow 3s ease-in-out infinite;
+  }
+
+  .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: screen;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.85));
+      display: block;
+  }
+
+  /* نقطة لمعان ليد نيون رفيعة تمر على خط الشعار نفسه ومحصورة بقناع شكل الشعار */
+  .neon-trace-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      -webkit-mask-image: url("1794938007565.png");
+      mask-image: url("1794938007565.png");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+  }
+
+  .neon-trace-wire {
+      position: absolute;
+      top: 50%;
+      left: -30%;
+      width: 22%;
+      height: 2.2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, #00ffcc 35%, #ffffff 55%, #fde047 80%, transparent);
+      box-shadow: 0 0 4px #00ffcc, 0 0 8px rgba(253, 224, 71, 0.7);
+      animation: neonWireRun 4.2s linear infinite;
+  }
+
+  @keyframes neonWireRun {
+      0% {
+          left: -25%;
+          top: 32%;
+          opacity: 0;
+      }
+      15% {
+          opacity: 0.9;
+      }
+      50% {
+          left: 45%;
+          top: 52%;
+          opacity: 1;
+      }
+      85% {
+          opacity: 0.9;
+      }
+      100% {
+          left: 115%;
+          top: 68%;
+          opacity: 0;
+      }
+  }
+
+  @keyframes logoPulseGlow {
+      0%, 100% { transform: translateY(6px) scale(2.15); opacity: 0.97; }
+      50% { transform: translateY(6px) scale(2.2); opacity: 1; }
+  }
+
+  /* في السكرين سيفر: إنزال الشعار لأسفل مع الإبقاء على حجمه الكبير (scale 5) */
+  @keyframes ssLogoPulseGlow {
+      0%, 100% { transform: translateY(48px) scale(5); opacity: 0.97; }
+      50% { transform: translateY(48px) scale(5.1); opacity: 1; }
+  }
+
+  /* خانتا السكور الرقميتان فقط بدون أي نصوص إضافية */
+  .score-slot {
+      min-width: 74px;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .score-slot:active {
+      transform: scale(0.93);
+  }
+
+  .score-num {
+      font-size: 35px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.95), 0 0 14px rgba(255, 255, 255, 0.55);
+      transition: color 0.3s, text-shadow 0.3s, transform 0.3s;
+  }
+
+  .score-slot.active-collecting .score-num {
+      color: #00ffcc;
+      text-shadow: 0 4px 12px #000, 0 0 22px rgba(0, 255, 204, 0.95);
+  }
+
+  .score-slot.winner-glow {
+      transform: scale(1.26);
+      animation: winnerScorePulse 0.9s ease-in-out infinite alternate;
+  }
+
+  .score-slot.winner-glow .score-num {
+      color: #fde047 !important;
+      text-shadow: 0 0 14px #fde047, 0 0 28px #00ffcc, 0 4px 10px #000 !important;
+  }
+
+  .score-slot.winner-glow::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 10%;
+      width: 80%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #fde047, #00ffcc, #fde047, transparent);
+      box-shadow: 0 0 12px #fde047;
+  }
+
+  @keyframes winnerScorePulse {
+      0% { transform: scale(1.2); filter: brightness(1); }
+      100% { transform: scale(1.34); filter: brightness(1.35); }
+  }
+
+  /* شبكة الـ 32 رقم: 4 أعمدة × 8 سطور، من اليسار لليمين (1 إلى 32) */
+  .grid-area {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 12px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .grid-32 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      column-gap: 0px;
+      row-gap: 0px;
+      width: 100%;
+      max-width: 390px;
+      height: 100%;
+      direction: ltr;
+  }
+
+  .cell {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      perspective: 750px;
+      min-height: 0;
+      overflow: visible;
+  }
+
+  .cell-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: visible;
+  }
+
+  .cell.open .cell-inner {
+      transform: rotateY(180deg);
+  }
+
+  .cell-front, .cell-back {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      font-weight: 900;
+      white-space: nowrap;
+  }
+
+  .cell-front {
+      font-size: 35px;
+      color: #ffffff;
+      -webkit-text-stroke: 2.3px #000000;
+      paint-order: stroke fill;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95), 0 0 12px rgba(255, 215, 0, 0.65);
+  }
+
+  .cell:hover .cell-front {
+      color: #fde047;
+      transform: scale(1.06);
+      transition: transform 0.15s ease;
+  }
+
+  .cell-back {
+      transform: rotateY(180deg);
+      font-size: 28px;
+      -webkit-text-stroke: 1.4px rgba(0, 0, 0, 0.95);
+      flex-direction: column;
+      line-height: 1;
+  }
+
+  .val-c1 { color: #ff4d4d; text-shadow: 0 3px 10px #000, 0 0 16px rgba(239,68,68,0.9); }
+  .val-c2 { color: #4ade80; text-shadow: 0 3px 10px #000, 0 0 16px rgba(34,197,94,0.9); }
+  .val-c3 { color: #38bdf8; text-shadow: 0 3px 10px #000, 0 0 16px rgba(56,189,248,0.9); }
+  .val-c4 { color: #fde047; text-shadow: 0 3px 10px #000, 0 0 16px rgba(234,179,8,0.9); }
+  .val-c5 { color: #e879f9; text-shadow: 0 3px 10px #000, 0 0 16px rgba(192,132,252,0.9); }
+
+  .chest-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: chestBlinkMove 0.8s ease-in-out infinite alternate;
+      z-index: 20;
+  }
+
+  .chest-emoji {
+      font-size: 26px;
+      line-height: 1;
+      filter: drop-shadow(0 0 10px gold) drop-shadow(0 0 20px rgba(255, 200, 0, 0.95));
+  }
+
+  .chest-number {
+      font-size: 18px;
+      font-weight: 900;
+      color: #fde047;
+      -webkit-text-stroke: 1.2px #000;
+      text-shadow: 0 0 12px #fde047, 0 0 20px #00ffcc, 0 2px 5px #000;
+      margin-top: 1px;
+  }
+
+  @keyframes chestBlinkMove {
+      0% {
+          transform: translate(-3px, -2px) scale(0.95);
+          filter: brightness(1) drop-shadow(0 0 8px gold);
+      }
+      50% {
+          transform: translate(3px, 2px) scale(1.15);
+          filter: brightness(1.5) drop-shadow(0 0 20px #fde047);
+      }
+      100% {
+          transform: translate(-2px, 3px) scale(1.06);
+          filter: brightness(1.25) drop-shadow(0 0 16px #00ffcc);
+      }
+  }
+
+  /* =========================================================
+     قسم الحساب الذهني: شريط المعادلة (المربع الأصغر) + معداد الأبيكس (المربع الكبير)
+     ========================================================= */
+  .mental-math-zone {
+      width: 100%;
+      margin-top: auto;
+      padding-top: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 15;
+      flex-shrink: 0;
+  }
+
+  .equation-bar {
+      width: 88%;
+      max-width: 310px;
+      min-height: 28px;
+      padding: 3px 12px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+      border: 1.5px solid rgba(0, 255, 204, 0.55);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(0, 255, 204, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      direction: ltr;
+      font-family: 'Habeba', sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #fde047;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 6px #000;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  .equation-bar .eq-op {
+      color: #00ffcc;
+      margin: 0 4px;
+  }
+  .equation-bar .eq-res {
+      color: #ffffff;
+      margin-left: 5px;
+      text-shadow: 0 0 10px #00ffcc;
+  }
+
+  .abacus-frame {
+      width: 82%;
+      max-width: 290px;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(9, 13, 24, 0.95) 100%);
+      border: 2.5px solid #d4af37;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.85), 0 0 15px rgba(212, 175, 55, 0.35), inset 0 0 12px rgba(0, 0, 0, 0.9);
+      position: relative;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-around;
+      align-items: stretch;
+      padding: 4px 10px;
+      direction: rtl;
+      overflow: hidden;
+  }
+
+  .abacus-beam {
+      position: absolute;
+      top: 34px;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #b38728, #fde047, #d4af37, #fde047, #b38728);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9), 0 0 6px rgba(253, 224, 71, 0.6);
+      z-index: 4;
+  }
+
+  .abacus-beam::after {
+      content: '';
+      position: absolute;
+      right: 17%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #0f172a;
+  }
+
+  .abacus-rod {
+      position: relative;
+      width: 44px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .abacus-rod::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(90deg, #64748b, #e2e8f0, #475569);
+      border-radius: 2px;
+      z-index: 1;
+  }
+
+  .bead {
+      position: absolute;
+      width: 38px;
+      height: 13px;
+      background: radial-gradient(ellipse at 35% 30%, #fbbf24 0%, #b45309 65%, #78350f 100%);
+      border: 1px solid #fef08a;
+      border-radius: 45% / 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      z-index: 3;
+      transition: top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, box-shadow 0.3s;
+  }
+
+  .bead.active {
+      background: radial-gradient(ellipse at 35% 30%, #5eead4 0%, #0d9488 65%, #115e59 100%);
+      border-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.9), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+  }
+
+  .heaven-bead { top: 4px; }
+  .heaven-bead.active { top: 18px; }
+
+  .earth-bead-1 { top: 52px; }
+  .earth-bead-1.active { top: 41px; }
+
+  .earth-bead-2 { top: 65px; }
+  .earth-bead-2.active { top: 54px; }
+
+  .earth-bead-3 { top: 78px; }
+  .earth-bead-3.active { top: 67px; }
+
+  .earth-bead-4 { top: 91px; }
+  .earth-bead-4.active { top: 80px; }
+
+  /* =========================================================
+     وضع السكرين سيفر:
+     - إخفاء الأرقام والسكورات فقط
+     - الشعار نازل أكثر لأسفل بنفس حجمه الكبير (scale 5) ومؤثر الليد النيون الخفيف داخل الشعار
+     - مربع المعادلة الأصغر + مربع الأبيكس الكبير بالوسط وخرزاته محصورة داخل الإطار
+     ========================================================= */
+  body.screensaver-active .score-slot {
+      display: none !important;
+  }
+
+  body.screensaver-active .grid-area {
+      display: none !important;
+  }
+
+  body.screensaver-active .logo-scores-row {
+      height: 82px;
+      justify-content: center;
+  }
+
+  body.screensaver-active .logo-img-container {
+      display: flex !important;
+      opacity: 1 !important;
+      pointer-events: none;
+      margin-top: 24px;
+  }
+
+  body.screensaver-active .logo-stage {
+      animation: ssLogoPulseGlow 3s ease-in-out infinite;
+  }
+
+  body.screensaver-active .mental-math-zone {
+      margin-top: auto;
+      margin-bottom: auto;
+      justify-content: center;
+      gap: 10px;
+      z-index: 100;
+  }
+
+  body.screensaver-active .equation-bar {
+      width: 82%;
+      max-width: 310px;
+      font-size: 20px;
+      min-height: 34px;
+      padding: 4px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border-color: #fde047;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 14px rgba(253, 224, 71, 0.35);
+  }
+
+  body.screensaver-active .abacus-frame {
+      width: 94%;
+      max-width: 410px;
+      height: 220px;
+      border-width: 3px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.92), 0 0 22px rgba(212, 175, 55, 0.45), inset 0 0 14px rgba(0, 0, 0, 0.9);
+      padding: 6px 14px;
+  }
+
+  body.screensaver-active .abacus-beam {
+      top: 60px;
+      height: 6px;
+  }
+
+  body.screensaver-active .abacus-rod {
+      width: 72px;
+  }
+
+  body.screensaver-active .bead {
+      width: 62px;
+      height: 21px;
+  }
+
+  body.screensaver-active .heaven-bead { top: 8px; }
+  body.screensaver-active .heaven-bead.active { top: 34px; }
+
+  body.screensaver-active .earth-bead-1 { top: 94px; }
+  body.screensaver-active .earth-bead-1.active { top: 70px; }
+
+  body.screensaver-active .earth-bead-2 { top: 115px; }
+  body.screensaver-active .earth-bead-2.active { top: 91px; }
+
+  body.screensaver-active .earth-bead-3 { top: 136px; }
+  body.screensaver-active .earth-bead-3.active { top: 112px; }
+
+  body.screensaver-active .earth-bead-4 { top: 157px; }
+  body.screensaver-active .earth-bead-4.active { top: 133px; }
+</style>
+</head>
+<body onclick="playVideo(); initAudio(); tryFS();">
+
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="YouCut_20261117_213738361.mp4" type="video/mp4">
+</video>
+
+<div class="main-wrapper">
+  <div class="brand-header">
+      <div class="brand-title">تعليم الحساب الذهني (<span class="ucmas-code">UCMAS</span>)</div>
+      <div class="logo-scores-row">
+          <div class="score-slot active-collecting" id="scoreSlot1" onclick="toggleSubGame(event)">
+              <div class="score-num" id="scoreVal1">0</div>
+          </div>
+
+          <div class="logo-img-container" id="logoContainer">
+              <div class="logo-stage">
+                  <img src="1794938007565.png" alt="UCMAS Logo" class="logo-img">
+                  <div class="neon-trace-layer">
+                      <div class="neon-trace-wire"></div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="score-slot" id="scoreSlot2">
+              <div class="score-num" id="scoreVal2">0</div>
+          </div>
+      </div>
+  </div>
+
+  <div class="grid-area">
+      <div class="grid-32" id="grid32"></div>
+  </div>
+
+  <div class="mental-math-zone" id="mentalMathZone">
+      <div class="equation-bar" id="equationDisplay">0</div>
+      
+      <div class="abacus-frame" id="sorobanAbacus" title="معداد الحساب الذهني UCMAS">
+          <div class="abacus-beam"></div>
+          
+          <div class="abacus-rod" id="rod-0">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-1">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-2">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-3">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  let audioCtx;
+  let subGameMode = 'numbers';
+  let scores = [0, 0];
+  let picksCount = 0;
+  let currentTurnValues = [];
+  let boardCells = [];
+  let isBusy = false;
+
+  const IDLE_TIMEOUT_MS = 15000;
+  let idleTimer = null;
+  let isScreensaverOn = false;
+  let ssCycleTimer = null;
+  let ssStepTimers = [];
+
+  const valuesList = [300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950];
+  const colorClasses = ['val-c1', 'val-c2', 'val-c3', 'val-c4', 'val-c5'];
+
+  window.onload = function() {
+      playVideo();
+      setupBoard();
+      resetIdleTimer();
+  };
+
+  function playVideo() {
+      const vid = document.getElementById('bgVideo');
+      if (vid) {
+          vid.playbackRate = 0.25;
+          vid.muted = true;
+          vid.play().catch(() => {});
+      }
+  }
+
+  function initAudio() {
+      if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+  }
+
+  function tryFS() {
+      if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+      }
+  }
+
+  function updateAbacus(number) {
+      let val = Math.max(0, Math.min(9999, Math.floor(number)));
+      for (let rodIdx = 0; rodIdx < 4; rodIdx++) {
+          let digit = val % 10;
+          val = Math.floor(val / 10);
+          
+          const rod = document.getElementById('rod-' + rodIdx);
+          if (!rod) continue;
+          
+          const heavenBead = rod.querySelector('.heaven-bead');
+          const hasFive = digit >= 5;
+          if (heavenBead) {
+              heavenBead.classList.toggle('active', hasFive);
+          }
+          
+          const remainder = digit % 5;
+          for (let b = 1; b <= 4; b++) {
+              const eBead = rod.querySelector('.earth-bead-' + b);
+              if (eBead) {
+                  eBead.classList.toggle('active', b <= remainder);
+              }
+          }
+      }
+  }
+
+  function updateEquationAndAbacus() {
+      const eqDisplay = document.getElementById('equationDisplay');
+      if (!eqDisplay) return;
+
+      if (currentTurnValues.length === 0) {
+          eqDisplay.innerHTML = '0';
+          updateAbacus(0);
+          return;
+      }
+
+      let total = 0;
+      let parts = [];
+      currentTurnValues.forEach((v, idx) => {
+          total += v;
+          if (idx === 0) {
+              parts.push(`${v}`);
+          } else {
+              parts.push(`<span class="eq-op">+</span>${v}`);
+          }
+      });
+
+      eqDisplay.innerHTML = `${parts.join('')} <span class="eq-op">=</span> <span class="eq-res">${total}</span>`;
+      updateAbacus(total);
+  }
+
+  function playSoftBeadTone() {
+      initAudio();
+      if (!audioCtx) return;
+      const notes = [329.63, 392.00, 523.25, 659.25];
+      const f = notes[Math.floor(Math.random() * notes.length)];
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, now);
+
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(0.07, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.67);
+  }
+
+  function clearScreensaverTimers() {
+      clearTimeout(ssCycleTimer);
+      ssStepTimers.forEach(t => clearTimeout(t));
+      ssStepTimers = [];
+  }
+
+  function startScreensaver() {
+      if (isScreensaverOn) return;
+      isScreensaverOn = true;
+      document.body.classList.add('screensaver-active');
+      runScreensaverEquationLoop();
+  }
+
+  function stopScreensaver() {
+      if (!isScreensaverOn) return;
+      isScreensaverOn = false;
+      document.body.classList.remove('screensaver-active');
+      clearScreensaverTimers();
+      updateEquationAndAbacus();
+  }
+
+  function resetIdleTimer() {
+      if (isScreensaverOn) {
+          stopScreensaver();
+      }
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(startScreensaver, IDLE_TIMEOUT_MS);
+  }
+
+  function generateMixedEquationSteps() {
+      const pattern = Math.floor(Math.random() * 3);
+      if (pattern === 0) {
+          const a = Math.floor(Math.random() * 500) + 100;
+          const b = Math.floor(Math.random() * 400) + 100;
+          const c = Math.floor(Math.random() * 300) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">=</span> <span class="eq-res">${a + b}</span>`, val: a + b },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">+</span> ${c} <span class="eq-op">=</span> <span class="eq-res">${a + b + c}</span>`, val: a + b + c }
+          ];
+      } else if (pattern === 1) {
+          const a = Math.floor(Math.random() * 600) + 200;
+          const b = Math.floor(Math.random() * 400) + 100;
+          const sumAB = a + b;
+          const c = Math.floor(Math.random() * Math.min(350, sumAB - 50)) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">=</span> <span class="eq-res">${sumAB}</span>`, val: sumAB },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">-</span> ${c} <span class="eq-op">=</span> <span class="eq-res">${sumAB - c}</span>`, val: sumAB - c }
+          ];
+      } else {
+          const a = Math.floor(Math.random() * 200) + 50;
+          const m = [2, 3, 4][Math.floor(Math.random() * 3)];
+          const prod = a * m;
+          const d = Math.floor(Math.random() * 300) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">×</span> ${m} <span class="eq-op">=</span> <span class="eq-res">${prod}</span>`, val: prod },
+              { html: `${a} <span class="eq-op">×</span> ${m} <span class="eq-op">+</span> ${d} <span class="eq-op">=</span> <span class="eq-res">${prod + d}</span>`, val: prod + d }
+          ];
+      }
+  }
+
+  function runScreensaverEquationLoop() {
+      if (!isScreensaverOn) return;
+      clearScreensaverTimers();
+      const steps = generateMixedEquationSteps();
+      const eqDisplay = document.getElementById('equationDisplay');
+      const stepDelay = 4800;
+
+      steps.forEach((step, idx) => {
+          const t = setTimeout(() => {
+              if (!isScreensaverOn) return;
+              if (eqDisplay) eqDisplay.innerHTML = step.html;
+              updateAbacus(step.val);
+              playSoftBeadTone();
+          }, idx * stepDelay);
+          ssStepTimers.push(t);
+      });
+
+      const cycleDuration = steps.length * stepDelay + 3000;
+      ssCycleTimer = setTimeout(() => {
+          if (!isScreensaverOn) return;
+          runScreensaverEquationLoop();
+      }, cycleDuration);
+  }
+
+  ['pointerdown', 'pointermove', 'touchstart', 'touchmove', 'keydown', 'wheel'].forEach(evt => {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+  });
+
+  function shuffleArray(arr) {
+      const buf = new Uint32Array(1);
+      for (let i = arr.length - 1; i > 0; i--) {
+          window.crypto.getRandomValues(buf);
+          const j = Math.floor((buf[0] / (0xffffffff + 1)) * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+  }
+
+  function toggleSubGame(e) {
+      e.stopPropagation();
+      playVideo();
+      initAudio();
+      subGameMode = (subGameMode === 'numbers') ? 'chest' : 'numbers';
+      playSwitchTone();
+      setupBoard();
+  }
+
+  function setupBoard() {
+      scores = [0, 0];
+      picksCount = 0;
+      currentTurnValues = [];
+      isBusy = false;
+
+      const s1 = document.getElementById('scoreVal1');
+      const s2 = document.getElementById('scoreVal2');
+      const slot1 = document.getElementById('scoreSlot1');
+      const slot2 = document.getElementById('scoreSlot2');
+
+      if (s1) s1.innerText = '0';
+      if (s2) s2.innerText = '0';
+
+      if (slot1) {
+          slot1.classList.remove('winner-glow');
+          slot1.classList.toggle('active-collecting', subGameMode === 'numbers');
+      }
+      if (slot2) {
+          slot2.classList.remove('winner-glow', 'active-collecting');
+      }
+
+      updateEquationAndAbacus();
+
+      const pool = [];
+      for (let i = 0; i < 31; i++) {
+          const val = valuesList[Math.floor(Math.random() * valuesList.length)];
+          const col = colorClasses[i % colorClasses.length];
+          pool.push({ type: 'num', value: val, color: col, open: false });
+      }
+      pool.push({ type: 'chest', value: 1000, color: '', open: false });
+      shuffleArray(pool);
+      boardCells = pool;
+
+      renderGrid();
+  }
+
+  function renderGrid() {
+      const grid = document.getElementById('grid32');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      for (let row = 0; row < 8; row++) {
+          for (let col = 0; col < 4; col++) {
+              const idx = row * 4 + col;
+              const item = boardCells[idx];
+
+              const cell = document.createElement('div');
+              cell.className = 'cell' + (item.open ? ' open' : '');
+              cell.id = 'c32-' + idx;
+
+              let backHTML = '';
+              if (item.type === 'chest') {
+                  backHTML = `
+                      <div class="chest-wrapper">
+                          <div class="chest-emoji">🧰</div>
+                          <div class="chest-number">1000</div>
+                      </div>
+                  `;
+              } else {
+                  backHTML = `<span class="${item.color}">${item.value}</span>`;
+              }
+
+              cell.innerHTML = `
+                  <div class="cell-inner">
+                      <div class="cell-front">${idx + 1}</div>
+                      <div class="cell-back">${backHTML}</div>
+                  </div>
+              `;
+
+              cell.onclick = (e) => {
+                  e.stopPropagation();
+                  playVideo();
+                  initAudio();
+                  if (isBusy) return;
+
+                  if (subGameMode === 'numbers') {
+                      onPickNumber(idx);
+                  } else {
+                      onOpenRow(row);
+                  }
+              };
+
+              grid.appendChild(cell);
+          }
+      }
+  }
+
+  function onPickNumber(idx) {
+      const item = boardCells[idx];
+      if (!item || item.open || picksCount >= 6) return;
+
+      item.open = true;
+      const el = document.getElementById('c32-' + idx);
+      if (el) el.classList.add('open');
+
+      if (item.type === 'chest') {
+          playChestTone();
+      } else {
+          playDeepPiano(item.value);
+      }
+
+      if (picksCount === 3) {
+          currentTurnValues = [];
+      }
+
+      currentTurnValues.push(item.value);
+      updateEquationAndAbacus();
+
+      const targetIdx = (picksCount < 3) ? 0 : 1;
+      scores[targetIdx] += item.value;
+      picksCount++;
+
+      document.getElementById('scoreVal1').innerText = scores[0];
+      document.getElementById('scoreVal2').innerText = scores[1];
+
+      const slot1 = document.getElementById('scoreSlot1');
+      const slot2 = document.getElementById('scoreSlot2');
+
+      if (picksCount < 3) {
+          slot1.classList.add('active-collecting');
+          slot2.classList.remove('active-collecting');
+      } else if (picksCount < 6) {
+          slot1.classList.remove('active-collecting');
+          slot2.classList.add('active-collecting');
+      } else {
+          slot1.classList.remove('active-collecting');
+          slot2.classList.remove('active-collecting');
+          setTimeout(() => {
+              playWinTone();
+              const maxScore = Math.max(scores[0], scores[1]);
+              updateAbacus(maxScore);
+              if (scores[0] > scores[1]) {
+                  slot1.classList.add('winner-glow');
+              } else if (scores[1] > scores[0]) {
+                  slot2.classList.add('winner-glow');
+              } else {
+                  slot1.classList.add('winner-glow');
+                  slot2.classList.add('winner-glow');
+              }
+          }, 450);
+      }
+  }
+
+  function onOpenRow(row) {
+      const start = row * 4;
+      const indices = [start, start + 1, start + 2, start + 3].filter(i => !boardCells[i].open);
+      if (indices.length === 0) return;
+
+      isBusy = true;
+      currentTurnValues = [];
+      updateEquationAndAbacus();
+
+      indices.forEach((cellIdx, step) => {
+          setTimeout(() => {
+              const item = boardCells[cellIdx];
+              if (!item || item.open) return;
+
+              item.open = true;
+              const el = document.getElementById('c32-' + cellIdx);
+              if (el) el.classList.add('open');
+
+              currentTurnValues.push(item.value);
+              updateEquationAndAbacus();
+
+              if (item.type === 'chest') {
+                  playChestTone();
+                  setTimeout(() => playWinTone(), 350);
+              } else {
+                  playDeepPiano(item.value);
+              }
+
+              if (step === indices.length - 1) {
+                  isBusy = false;
+              }
+          }, step * 180);
+      });
+  }
+
+  let touchStartX = 0, touchStartY = 0, didTouchShuffle = false;
+
+  document.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 0) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      didTouchShuffle = false;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+      if (didTouchShuffle || e.touches.length === 0) return;
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 50 || dy > 50) {
+          didTouchShuffle = true;
+          initAudio();
+          playShuffleTone();
+          setupBoard();
+      }
+  }, { passive: true });
+
+  let mouseDown = false, mStartX = 0, mStartY = 0, didMouseShuffle = false;
+
+  document.addEventListener('mousedown', (e) => {
+      mouseDown = true;
+      didMouseShuffle = false;
+      mStartX = e.clientX;
+      mStartY = e.clientY;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+      if (!mouseDown || didMouseShuffle) return;
+      const dx = Math.abs(e.clientX - mStartX);
+      const dy = Math.abs(e.clientY - mStartY);
+      if (dx > 70 || dy > 70) {
+          didMouseShuffle = true;
+          initAudio();
+          playShuffleTone();
+          setupBoard();
+      }
+  });
+
+  document.addEventListener('mouseup', () => {
+      mouseDown = false;
+  });
+
+  document.addEventListener('wheel', () => {
+      initAudio();
+      playShuffleTone();
+      setupBoard();
+  }, { passive: true });
+
+  function playDeepPiano(val) {
+      if (!audioCtx) return;
+      const ratio = Math.max(0, Math.min(1, (val - 300) / 650));
+      const freq = 65 + ratio * 130;
+
+      const now = audioCtx.currentTime;
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc1.type = 'triangle';
+      osc2.type = 'sine';
+      osc1.frequency.setValueAtTime(freq, now);
+      osc2.frequency.setValueAtTime(freq * 0.5, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.45, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + 0.56);
+      osc2.stop(now + 0.56);
+  }
+
+  function playChestTone() {
+      if (!audioCtx) return;
+      const notes = [261.63, 329.63, 392.00, 523.25];
+      notes.forEach((f, i) => {
+          const now = audioCtx.currentTime + i * 0.08;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now);
+          gain.gain.setValueAtTime(0.32, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+      });
+  }
+
+  function playWinTone() {
+      if (!audioCtx) return;
+      const notes = [130.81, 164.81, 196.00, 261.63];
+      notes.forEach((f, i) => {
+          const now = audioCtx.currentTime + i * 0.12;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now);
+          gain.gain.setValueAtTime(0.35, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.46);
+      });
+  }
+
+  function playShuffleTone() {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(140, now);
+      osc.frequency.exponentialRampToValueAtTime(310, now + 0.16);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.19);
+  }
+
+  function playSwitchTone() {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.setValueAtTime(330, now + 0.08);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.23);
+  }
+</script>
+</body>
+</html>

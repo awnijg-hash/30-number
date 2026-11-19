@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تحدي البومب - شعار UCMAS</title>
+<style>
+  @import url('https://fonts.cdnfonts.com/css/habeba');
+  @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@800&display=swap');
+  
+  * { -webkit-tap-highlight-color: transparent; outline: none; user-select: none; box-sizing: border-box; }
+  
+  body { 
+      margin: 0; 
+      padding: 0; 
+      background: #0f172a; 
+      font-family: 'Habeba', sans-serif; 
+      color: white; 
+      width: 100vw;
+      height: 100vh; 
+      height: 100dvh;
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0 8px 0;
+      position: relative;
+  }
+  
+  /* فيديو الخلفية العام بطيء وهادئ */
+  .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+      transform: scale(1.35);
+      filter: brightness(0.62);
+  }
+  
+  .main-wrapper {
+      width: 100%;
+      max-width: 540px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: relative;
+      z-index: 2;
+  }
+
+  /* الترويسة العلوية للشعار والعنوان: تعليم الحساب الذهني (UCMAS) */
+  .brand-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      pointer-events: none;
+      flex-shrink: 0;
+      gap: 2px;
+  }
+
+  .brand-title {
+      font-family: 'Almarai', sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      color: #fde047;
+      text-align: center;
+      line-height: 1.1;
+      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.85);
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95), 0 0 16px rgba(255, 215, 0, 0.75);
+      z-index: 65;
+  }
+
+  .brand-title .ucmas-code {
+      color: #00ffcc;
+      font-family: 'Almarai', sans-serif;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95), 0 0 18px rgba(0, 255, 204, 0.9);
+  }
+
+  /* الشعار مكبّر ضعفين في مكانه تماماً بدون إزاحة أي عنصر */
+  .logo-img-container {
+      width: 98%;
+      max-width: 500px;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      pointer-events: none;
+      flex-shrink: 0;
+      overflow: visible;
+      animation: logoPulseGlow 3s ease-in-out infinite;
+      transition: margin-top 0.35s ease;
+  }
+
+  .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: screen;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      filter: drop-shadow(0 0 14px rgba(0,255,204,0.85)) drop-shadow(0 2px 10px rgba(0,0,0,0.95));
+  }
+
+  @keyframes logoPulseGlow {
+      0%, 100% { transform: scale(2); filter: drop-shadow(0 0 12px rgba(0,255,204,0.75)) drop-shadow(0 2px 8px rgba(0,0,0,0.9)); opacity: 0.96; }
+      50% { transform: scale(2.06); filter: drop-shadow(0 0 22px rgba(255,215,0,0.95)) drop-shadow(0 4px 12px rgba(0,0,0,0.95)); opacity: 1; }
+  }
+
+  @keyframes ssLogoPulseGlow {
+      0%, 100% { transform: translateY(34px) scale(3.4); filter: drop-shadow(0 0 16px rgba(0,255,204,0.85)) drop-shadow(0 4px 12px rgba(0,0,0,0.95)); opacity: 0.96; }
+      50% { transform: translateY(34px) scale(3.5); filter: drop-shadow(0 0 26px rgba(255,215,0,0.95)) drop-shadow(0 6px 16px rgba(0,0,0,0.95)); opacity: 1; }
+  }
+
+  .top-frame { 
+      width: 100%; 
+      margin-top: 0px;
+      margin-bottom: 2px; 
+      flex-shrink: 0;
+  }
+  
+  .top-bar { 
+      height: 72px; 
+      background: transparent !important; 
+      backdrop-filter: none !important; 
+      border: none; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 2px; 
+      position: relative; 
+      width: 100%;
+  }
+
+  .hud-top-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 26px;
+      align-items: center;
+  }
+
+  .floating-container {
+      animation: subtleFloat 4s ease-in-out infinite;
+      position: relative;
+      z-index: 10;
+  }
+  .floating-container.alt {
+      animation: subtleFloatAlt 4.5s ease-in-out infinite;
+  }
+
+  @keyframes subtleFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(1deg); }
+  }
+  @keyframes subtleFloatAlt {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(3px) rotate(-1deg); }
+  }
+
+  .hud-bottom-row {
+      position: relative;
+      margin-top: -12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 30;
+  }
+
+  /* بدون دوائر: أرقام السكور والسكور المؤقت مباشرة بدون إطار أو خلفية */
+  .hud-circle {
+      min-width: 60px;
+      min-height: 40px;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+  }
+  .hud-circle:active { transform: scale(0.95); }
+
+  .hud-center-circle {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      cursor: pointer;
+  }
+
+  .mini-badge {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      background: transparent !important;
+      border: none !important;
+      color: gold;
+      font-size: 15px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 22px;
+      z-index: 40;
+      pointer-events: auto;
+      text-shadow: 0 2px 6px #000, 0 0 10px rgba(255, 215, 0, 0.8);
+  }
+  .hud-left-badge { right: -16px; }
+  .hud-right-badge { left: -16px; }
+
+  .game-started .mini-badge { pointer-events: none; }
+
+  .mini-badge input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: gold;
+      font-family: 'Habeba', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      text-align: center;
+      outline: none;
+      text-shadow: 0 2px 6px #000, 0 0 10px rgba(255, 215, 0, 0.8);
+  }
+
+  .hud-value { 
+      font-size: 36px; 
+      color: white; 
+      font-weight: 900; 
+      line-height: 1; 
+      -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.85);
+      text-shadow: 0 4px 10px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.6); 
+  }
+  .hud-center-val { 
+      font-size: 40px; 
+      color: #00ffcc; 
+      -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 4px 12px rgba(0,0,0,0.95), 0 0 22px rgba(0,255,204,0.95); 
+  }
+
+  .pulse-anim { animation: numPulse 0.3s ease; }
+  @keyframes numPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); color: #00ffcc; }
+      100% { transform: scale(1); }
+  }
+
+  .active-team-glow {
+      transform: scale(1.38) !important;
+      z-index: 50;
+  }
+  .active-team-glow .hud-value {
+      color: #00ffcc !important;
+      text-shadow: 0 4px 12px #000, 0 0 24px rgba(0,255,204,1) !important;
+  }
+  .active-team-glow .mini-badge,
+  .active-team-glow .mini-badge input { 
+      color: #00ffcc !important; 
+  }
+
+  .active-team-glow::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 15%;
+      width: 70%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffcc, #ffffff, #00ffcc, transparent);
+      box-shadow: 0 0 10px #00ffcc;
+      pointer-events: none;
+  }
+
+  .game-frame { 
+      width: 100%; 
+      flex: 1;
+      min-height: 0;
+      background: transparent; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 2px 0;
+  }
+
+  .game-area { 
+      width: 100%; 
+      height: 100%;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+  }
+  
+  /* تقليص بسيط للفراغات العمودية لإتاحة مساحة كاملة للأبيكس بالأسفل */
+  .grid-container { 
+      display: grid; 
+      column-gap: 10px;
+      row-gap: 8px; 
+      width: 100%; 
+      grid-template-columns: repeat(5, 1fr); 
+      padding: 2px 6px; 
+  }
+  
+  .square { 
+      background: transparent !important; 
+      border-radius: 0 !important; 
+      border: none !important; 
+      box-shadow: none !important; 
+      position: relative; 
+      cursor: pointer; 
+      transform-style: preserve-3d; 
+      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      aspect-ratio: 1.4 / 1; 
+  }
+
+  .square:active { transform: scale(0.92); }
+  
+  .outer-num { 
+      color: #ffffff; 
+      font-size: 35px; 
+      font-weight: 900; 
+      z-index: 2; 
+      -webkit-text-stroke: 2.5px #000000;
+      paint-order: stroke fill;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.95), 0 0 14px rgba(255,215,0,0.65); 
+  }
+
+  .square:hover .outer-num {
+      color: #fde047;
+      text-shadow: 0 4px 12px #000, 0 0 20px rgba(255,215,0,1);
+  }
+  
+  .inner-face { 
+      position: absolute; 
+      width: 100%; 
+      height: 100%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 37px; 
+      font-weight: 900; 
+      transform: rotateY(180deg); 
+      backface-visibility: hidden; 
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.9);
+  }
+  
+  .square.open .outer-num { display: none; }
+  .square.open { transform: rotateY(180deg); }
+  
+  .bg-white-special { background: transparent !important; color: #ffffff !important; border: none !important; text-shadow: 0 4px 12px #000, 0 0 22px #00f2ff !important; } 
+  .bg-red { background: transparent !important; color: #ff4d4d !important; text-shadow: 0 4px 10px #000, 0 0 18px rgba(239,68,68,0.95) !important; } 
+  .bg-green { background: transparent !important; color: #4ade80 !important; text-shadow: 0 4px 10px #000, 0 0 18px rgba(34,197,94,0.95) !important; } 
+  .bg-blue { background: transparent !important; color: #38bdf8 !important; text-shadow: 0 4px 10px #000, 0 0 18px rgba(56,189,248,0.95) !important; } 
+  .bg-yellow { background: transparent !important; color: #fde047 !important; text-shadow: 0 4px 10px #000, 0 0 18px rgba(234,179,8,0.95) !important; } 
+  .bg-purple { background: transparent !important; color: #e879f9 !important; text-shadow: 0 4px 10px #000, 0 0 18px rgba(192,132,252,0.95) !important; }
+  
+  .square.shatter { animation: shatterAnim 0.7s forwards; pointer-events: none; }
+  @keyframes shatterAnim { 0% { transform: rotateY(180deg) scale(1); opacity: 1; } 100% { transform: rotateY(180deg) scale(0) rotate(15deg); opacity: 0; } }
+  .shake { animation: shakeAnim 0.6s both; }
+  @keyframes shakeAnim { 10%, 90% { transform: translate3d(-3px, 0, 0); } 20%, 80% { transform: translate3d(5px, 0, 0); } }
+
+  /* =========================================================
+     قسم الحساب الذهني في أسفل الشاشة: شريط المعادلة + معداد الأبيكس المصغّر
+     ========================================================= */
+  .mental-math-zone {
+      width: 100%;
+      padding-top: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+      z-index: 15;
+      flex-shrink: 0;
+  }
+
+  .equation-bar {
+      width: 92%;
+      max-width: 340px;
+      min-height: 28px;
+      padding: 3px 12px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+      border: 1.5px solid rgba(0, 255, 204, 0.55);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(0, 255, 204, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      direction: ltr;
+      font-family: 'Habeba', sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #fde047;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 6px #000;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
+  .equation-bar .eq-op {
+      color: #00ffcc;
+      margin: 0 4px;
+  }
+  .equation-bar .eq-res {
+      color: #ffffff;
+      margin-left: 5px;
+      text-shadow: 0 0 10px #00ffcc;
+  }
+
+  /* تصغير الحجم الكلي لآلة الأبيكس ليظهر إطارها السفلي بالكامل */
+  .abacus-frame {
+      width: 82%;
+      max-width: 290px;
+      height: 114px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(9, 13, 24, 0.95) 100%);
+      border: 2.5px solid #d4af37;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.85), 0 0 15px rgba(212, 175, 55, 0.35), inset 0 0 12px rgba(0, 0, 0, 0.9);
+      position: relative;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-around;
+      align-items: stretch;
+      padding: 4px 10px;
+      direction: rtl;
+      overflow: hidden;
+  }
+
+  .abacus-beam {
+      position: absolute;
+      top: 33px;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #b38728, #fde047, #d4af37, #fde047, #b38728);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9), 0 0 6px rgba(253, 224, 71, 0.6);
+      z-index: 4;
+  }
+
+  .abacus-beam::after {
+      content: '';
+      position: absolute;
+      right: 17%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #0f172a;
+  }
+
+  .abacus-rod {
+      position: relative;
+      width: 44px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .abacus-rod::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(90deg, #64748b, #e2e8f0, #475569);
+      border-radius: 2px;
+      z-index: 1;
+  }
+
+  .bead {
+      position: absolute;
+      width: 38px;
+      height: 13px;
+      background: radial-gradient(ellipse at 35% 30%, #fbbf24 0%, #b45309 65%, #78350f 100%);
+      border: 1px solid #fef08a;
+      border-radius: 45% / 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      z-index: 3;
+      transition: top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, box-shadow 0.3s;
+  }
+
+  .bead.active {
+      background: radial-gradient(ellipse at 35% 30%, #5eead4 0%, #0d9488 65%, #115e59 100%);
+      border-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.9), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+  }
+
+  /* مواضع الخرزات مضبوطة بدقة للارتفاع الجديد (114px) */
+  .heaven-bead { top: 3px; }
+  .heaven-bead.active { top: 17px; }
+
+  .earth-bead-1 { top: 51px; }
+  .earth-bead-1.active { top: 40px; }
+
+  .earth-bead-2 { top: 65px; }
+  .earth-bead-2.active { top: 54px; }
+
+  .earth-bead-3 { top: 79px; }
+  .earth-bead-3.active { top: 68px; }
+
+  .earth-bead-4 { top: 93px; }
+  .earth-bead-4.active { top: 82px; }
+
+  /* =========================================================
+     وضع السكرين سيفر:
+     - إخفاء السكورات والشبكة
+     - الشعار نازل شوي لأسفل
+     - شريط المعادلة + معداد الأبيكس بالوسط وخرزاته محصورة داخل الإطار
+     ========================================================= */
+  body.screensaver-active .top-frame,
+  body.screensaver-active .game-frame {
+      display: none !important;
+  }
+
+  body.screensaver-active .logo-img-container {
+      margin-top: 14px;
+      animation: ssLogoPulseGlow 3s ease-in-out infinite;
+  }
+
+  body.screensaver-active .mental-math-zone {
+      margin-top: auto;
+      margin-bottom: auto;
+      justify-content: center;
+      gap: 10px;
+      z-index: 100;
+  }
+
+  body.screensaver-active .equation-bar {
+      width: 82%;
+      max-width: 310px;
+      font-size: 20px;
+      min-height: 34px;
+      padding: 4px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border-color: #fde047;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 14px rgba(253, 224, 71, 0.35);
+  }
+
+  body.screensaver-active .abacus-frame {
+      width: 94%;
+      max-width: 410px;
+      height: 220px;
+      border-width: 3px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.92), 0 0 22px rgba(212, 175, 55, 0.45), inset 0 0 14px rgba(0, 0, 0, 0.9);
+      padding: 6px 14px;
+  }
+
+  body.screensaver-active .abacus-beam {
+      top: 60px;
+      height: 6px;
+  }
+
+  body.screensaver-active .abacus-rod {
+      width: 72px;
+  }
+
+  body.screensaver-active .bead {
+      width: 62px;
+      height: 21px;
+  }
+
+  body.screensaver-active .heaven-bead { top: 8px; }
+  body.screensaver-active .heaven-bead.active { top: 34px; }
+
+  body.screensaver-active .earth-bead-1 { top: 94px; }
+  body.screensaver-active .earth-bead-1.active { top: 70px; }
+
+  body.screensaver-active .earth-bead-2 { top: 115px; }
+  body.screensaver-active .earth-bead-2.active { top: 91px; }
+
+  body.screensaver-active .earth-bead-3 { top: 136px; }
+  body.screensaver-active .earth-bead-3.active { top: 112px; }
+
+  body.screensaver-active .earth-bead-4 { top: 157px; }
+  body.screensaver-active .earth-bead-4.active { top: 133px; }
+
+  /* شاشة الفائز */
+  #winnerModal {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+  }
+  #winnerModal.show {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  .winner-card {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      border: 4px solid gold;
+      border-radius: 25px;
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+      animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes winnerPop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+  }
+  .winner-title {
+      font-family: 'Almarai', sans-serif;
+      font-size: 32px;
+      color: gold;
+      text-shadow: 0 0 15px rgba(255,215,0,0.8);
+      margin-bottom: 15px;
+      font-weight: 900;
+  }
+  .winner-name {
+      font-size: 45px;
+      color: #00ffcc;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(0,255,204,0.8);
+  }
+  .winner-score {
+      font-size: 26px;
+      color: white;
+      margin-bottom: 25px;
+      font-weight: 900;
+  }
+  .restart-btn {
+      padding: 12px 30px;
+      background: linear-gradient(135deg, gold, #b38728);
+      color: #000;
+      font-family: 'Habeba', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+      transition: 0.2s;
+  }
+  .restart-btn:active { transform: scale(0.95); }
+
+  /* تأثير الانفجار برقم 0 */
+  #bombOverlay {
+      position: fixed;
+      inset: 0;
+      background: transparent;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+  }
+  #bombOverlay.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: shockwaveExpand 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  }
+  @keyframes shockwaveExpand {
+      0% {
+          background: radial-gradient(circle, rgba(255,0,0,0.7) 0%, rgba(255,0,0,0.3) 20%, transparent 40%);
+          transform: scale(0.2);
+      }
+      50% {
+          background: radial-gradient(circle, rgba(255,50,50,0.5) 0%, rgba(255,0,0,0.2) 50%, transparent 80%);
+          transform: scale(1.5);
+      }
+      100% {
+          background: radial-gradient(circle, transparent 0%, transparent 100%);
+          transform: scale(3);
+          opacity: 0;
+      }
+  }
+  .giant-bomb-icon {
+      font-size: 130px;
+      font-weight: 900;
+      color: #ff3b3b;
+      -webkit-text-stroke: 3px #000;
+      animation: bombPopScale 0.6s ease alternate infinite;
+      text-shadow: 0 0 25px #ff0000, 0 0 50px rgba(255,0,0,0.9);
+  }
+  @keyframes bombPopScale {
+      0% { transform: scale(0.8); }
+      100% { transform: scale(1.2); }
+  }
+</style>
+</head>
+<body onclick="playVideo(); initAudio(); tryFS();">
+
+<!-- فيديو الخلفية العام بالاسم الجديد -->
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="YouCut_20261117_213738361.mp4" type="video/mp4">
+    متصفحك لا يدعم تشغيل الفيديو.
+</video>
+
+<div id="bombOverlay">
+    <div class="giant-bomb-icon">0</div>
+</div>
+
+<div class="main-wrapper">
+  <!-- العنوان العلوي والشعار الكبير المكبّر بالعرض -->
+  <div class="brand-header">
+      <div class="brand-title">تعليم الحساب الذهني (<span class="ucmas-code">UCMAS</span>)</div>
+      <div class="logo-img-container">
+          <img src="1794938007565.png" alt="UCMAS Logo" class="logo-img">
+      </div>
+  </div>
+
+  <div class="top-frame" id="p1">
+    <div class="top-bar" id="topBarContainer">
+      <div class="hud-top-row">
+          <div class="floating-container">
+              <div class="hud-circle" id="hudLeft" onclick="undoSquare()" title="تراجع">
+                  <div class="mini-badge hud-left-badge"><input type="text" maxlength="1" value="1" onclick="event.stopPropagation()"></div>
+                  <div class="hud-value" id="scoreLeft">0</div>
+              </div>
+          </div>
+
+          <div class="floating-container alt">
+              <div class="hud-circle" id="hudRight" onclick="handleRightAction()" title="اسحب">
+                  <div class="mini-badge hud-right-badge"><input type="text" maxlength="1" value="2" onclick="event.stopPropagation()"></div>
+                  <div class="hud-value" id="scoreRight">0</div>
+              </div>
+          </div>
+      </div>
+
+      <div class="hud-bottom-row">
+          <div class="hud-circle hud-center-circle" onclick="startNewGame()" title="إعادة اللعبة">
+              <div class="hud-value hud-center-val" id="currentSum">0</div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-frame" id="p2">
+    <div class="game-area">
+        <div class="grid-container" id="gameGrid"></div>
+        
+        <div id="winnerModal">
+            <div class="winner-card">
+                <div class="winner-title">🏆 انتهت اللوحة! الفائز بالمركز الأول 🏆</div>
+                <div class="winner-name" id="winnerText">فريق 1</div>
+                <div class="winner-score" id="winnerScore">السكور: 0</div>
+                <button class="restart-btn" onclick="startNewGame()">لعبة جديدة</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- منطقة الحساب الذهني في أسفل الشاشة: شريط المعادلة + معداد الأبيكس -->
+  <div class="mental-math-zone">
+      <div class="equation-bar" id="equationDisplay">0</div>
+      
+      <div class="abacus-frame" id="sorobanAbacus" title="معداد الحساب الذهني UCMAS">
+          <div class="abacus-beam"></div>
+          
+          <div class="abacus-rod" id="rod-0">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-1">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-2">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+          
+          <div class="abacus-rod" id="rod-3">
+              <div class="bead heaven-bead"></div>
+              <div class="bead earth-bead-1"></div>
+              <div class="bead earth-bead-2"></div>
+              <div class="bead earth-bead-3"></div>
+              <div class="bead earth-bead-4"></div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+   const fullStandardNumericPool = [];
+   const colorsList = ['bg-red', 'bg-green', 'bg-blue', 'bg-yellow', 'bg-purple'];
+   
+   for(let val = 9; val >= 1; val--) {
+       colorsList.forEach(col => {
+           fullStandardNumericPool.push({t: 'n', v: val, c: col});
+       });
+   }
+
+  let currentTurnHistory = [];  
+  let teams = [
+      { id: 0, name: 'فريق 1', score: 0 },
+      { id: 1, name: 'فريق 2', score: 0 }
+  ]; 
+  let currentTeamIdx = 0, turnPicks = [], isProcessing = false, audioCtx, ballsCount = 2;
+  let openedSquaresCount = 0; 
+
+  const IDLE_TIMEOUT_MS = 15000;
+  let idleTimer = null;
+  let isScreensaverOn = false;
+  let ssCycleTimer = null;
+  let ssStepTimers = [];
+
+  window.onload = function() {
+      playVideo();
+      startNewGame();
+      resetIdleTimer();
+  };
+
+  function playVideo() {
+      const vid = document.getElementById('bgVideo');
+      if (vid) {
+          vid.playbackRate = 0.25; 
+          vid.muted = true;
+          vid.play().catch(err => console.log(err));
+      }
+  }
+
+  function updateAbacus(number) {
+      let val = Math.max(0, Math.min(9999, Math.floor(number)));
+      for (let rodIdx = 0; rodIdx < 4; rodIdx++) {
+          let digit = val % 10;
+          val = Math.floor(val / 10);
+          
+          const rod = document.getElementById('rod-' + rodIdx);
+          if (!rod) continue;
+          
+          const heavenBead = rod.querySelector('.heaven-bead');
+          const hasFive = digit >= 5;
+          if (heavenBead) {
+              heavenBead.classList.toggle('active', hasFive);
+          }
+          
+          const remainder = digit % 5;
+          for (let b = 1; b <= 4; b++) {
+              const eBead = rod.querySelector('.earth-bead-' + b);
+              if (eBead) {
+                  eBead.classList.toggle('active', b <= remainder);
+              }
+          }
+      }
+  }
+
+  function updateSum() { 
+      let total = 0; 
+      let eqParts = [];
+
+      turnPicks.forEach((p, idx) => { 
+          if (p.t === 'n') {
+              total += p.v;
+              if (idx === 0) {
+                  eqParts.push(`${p.v}`);
+              } else {
+                  eqParts.push(`<span class="eq-op">+</span>${p.v}`);
+              }
+          } else if (p.t === 'x') {
+              if (total > 0) {
+                  total *= p.v;
+                  eqParts.push(`<span class="eq-op">×</span>${p.v}`);
+              } else {
+                  eqParts.push(`0<span class="eq-op">×</span>${p.v}`);
+              }
+          }
+      }); 
+      
+      const sumDisplay = document.getElementById('currentSum');
+      if (sumDisplay) {
+          sumDisplay.innerText = total;
+          sumDisplay.classList.add('pulse-anim');
+          setTimeout(() => sumDisplay.classList.remove('pulse-anim'), 300);
+      }
+
+      const eqDisplay = document.getElementById('equationDisplay');
+      if (eqDisplay) {
+          if (turnPicks.length === 0) {
+              eqDisplay.innerHTML = '0';
+          } else {
+              eqDisplay.innerHTML = `${eqParts.join('')} <span class="eq-op">=</span> <span class="eq-res">${total}</span>`;
+          }
+      }
+
+      updateAbacus(total);
+  }
+
+  function playSoftBeadTone() {
+      initAudio();
+      if (!audioCtx) return;
+      const notes = [329.63, 392.00, 523.25, 659.25];
+      const f = notes[Math.floor(Math.random() * notes.length)];
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, now);
+
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(0.07, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.67);
+  }
+
+  function clearScreensaverTimers() {
+      clearTimeout(ssCycleTimer);
+      ssStepTimers.forEach(t => clearTimeout(t));
+      ssStepTimers = [];
+  }
+
+  function startScreensaver() {
+      if (isScreensaverOn) return;
+      isScreensaverOn = true;
+      document.body.classList.add('screensaver-active');
+      runScreensaverEquationLoop();
+  }
+
+  function stopScreensaver() {
+      if (!isScreensaverOn) return;
+      isScreensaverOn = false;
+      document.body.classList.remove('screensaver-active');
+      clearScreensaverTimers();
+      updateSum();
+  }
+
+  function resetIdleTimer() {
+      if (isScreensaverOn) {
+          stopScreensaver();
+      }
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(startScreensaver, IDLE_TIMEOUT_MS);
+  }
+
+  function generateMixedEquationSteps() {
+      const pattern = Math.floor(Math.random() * 3);
+      if (pattern === 0) {
+          const a = Math.floor(Math.random() * 500) + 100;
+          const b = Math.floor(Math.random() * 400) + 100;
+          const c = Math.floor(Math.random() * 300) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">=</span> <span class="eq-res">${a + b}</span>`, val: a + b },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">+</span> ${c} <span class="eq-op">=</span> <span class="eq-res">${a + b + c}</span>`, val: a + b + c }
+          ];
+      } else if (pattern === 1) {
+          const a = Math.floor(Math.random() * 600) + 200;
+          const b = Math.floor(Math.random() * 400) + 100;
+          const sumAB = a + b;
+          const c = Math.floor(Math.random() * Math.min(350, sumAB - 50)) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">=</span> <span class="eq-res">${sumAB}</span>`, val: sumAB },
+              { html: `${a} <span class="eq-op">+</span> ${b} <span class="eq-op">-</span> ${c} <span class="eq-op">=</span> <span class="eq-res">${sumAB - c}</span>`, val: sumAB - c }
+          ];
+      } else {
+          const a = Math.floor(Math.random() * 200) + 50;
+          const m = [2, 3, 4][Math.floor(Math.random() * 3)];
+          const prod = a * m;
+          const d = Math.floor(Math.random() * 300) + 50;
+          return [
+              { html: `${a}`, val: a },
+              { html: `${a} <span class="eq-op">×</span> ${m} <span class="eq-op">=</span> <span class="eq-res">${prod}</span>`, val: prod },
+              { html: `${a} <span class="eq-op">×</span> ${m} <span class="eq-op">+</span> ${d} <span class="eq-op">=</span> <span class="eq-res">${prod + d}</span>`, val: prod + d }
+          ];
+      }
+  }
+
+  function runScreensaverEquationLoop() {
+      if (!isScreensaverOn) return;
+      clearScreensaverTimers();
+      const steps = generateMixedEquationSteps();
+      const eqDisplay = document.getElementById('equationDisplay');
+      const stepDelay = 4800;
+
+      steps.forEach((step, idx) => {
+          const t = setTimeout(() => {
+              if (!isScreensaverOn) return;
+              if (eqDisplay) eqDisplay.innerHTML = step.html;
+              updateAbacus(step.val);
+              playSoftBeadTone();
+          }, idx * stepDelay);
+          ssStepTimers.push(t);
+      });
+
+      const cycleDuration = steps.length * stepDelay + 3000;
+      ssCycleTimer = setTimeout(() => {
+          if (!isScreensaverOn) return;
+          runScreensaverEquationLoop();
+      }, cycleDuration);
+  }
+
+  ['pointerdown', 'pointermove', 'touchstart', 'touchmove', 'keydown', 'wheel'].forEach(evt => {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+  });
+
+  function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+  function tryFS() { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); }
+
+  function startNewGame() {
+      playVideo();
+      const grid = document.getElementById('gameGrid');
+      if(grid) {
+          grid.innerHTML = ''; 
+          grid.style.display = 'none'; 
+          grid.offsetHeight; 
+          grid.style.display = 'grid'; 
+      }
+
+      currentTurnHistory = [];
+      turnPicks = [];
+      isProcessing = false;
+      currentTeamIdx = 0; 
+      ballsCount = 2; 
+      openedSquaresCount = 0;
+
+      const bar = document.getElementById('topBarContainer');
+      if(bar) bar.classList.remove('game-started');
+
+      teams = [
+          { id: 0, name: 'فريق 1', score: 0 },
+          { id: 1, name: 'فريق 2', score: 0 }
+      ];
+
+      const overlay = document.getElementById('bombOverlay');
+      if(overlay) overlay.classList.remove('show');
+
+      const winnerModal = document.getElementById('winnerModal');
+      if(winnerModal) winnerModal.classList.remove('show');
+
+      setupGrid(30, 2); 
+      renderTeamsHUD(); 
+      updateSum();
+  }
+
+  function renderTeamsHUD() {
+      if (teams.length < 2) return;
+
+      const scoreLeft = document.getElementById('scoreLeft');
+      const hudLeft = document.getElementById('hudLeft');
+
+      const scoreRight = document.getElementById('scoreRight');
+      const hudRight = document.getElementById('hudRight');
+
+      scoreLeft.innerText = teams[0].score;
+      scoreRight.innerText = teams[1].score;
+
+      hudLeft.classList.toggle('active-team-glow', currentTeamIdx === 0);
+      hudRight.classList.toggle('active-team-glow', currentTeamIdx === 1);
+  }
+
+  function handleRightAction() {
+      playVideo();
+      if (isProcessing || turnPicks.length === 0) return;
+
+      const bar = document.getElementById('topBarContainer');
+      if(bar) bar.classList.add('game-started');
+
+      let totalScore = 0;
+      turnPicks.forEach((p, index) => {
+          if (p.t === 'n') totalScore += p.v;
+          else if (p.t === 'x' && index > 0) totalScore *= p.v;
+      });
+
+      teams[currentTeamIdx].score += totalScore;
+      
+      const activeScoreEl = currentTeamIdx === 0 ? document.getElementById('scoreLeft') : document.getElementById('scoreRight');
+      if(activeScoreEl) {
+          activeScoreEl.classList.add('pulse-anim');
+          setTimeout(() => activeScoreEl.classList.remove('pulse-anim'), 300);
+      }
+
+      isProcessing = true; 
+      resetTurn();
+  }
+
+  function setupGrid(total, bombs) {
+      const grid = document.getElementById('gameGrid');
+      if(!grid) return;
+      grid.innerHTML = '';
+      isProcessing = false; 
+      turnPicks = []; 
+      currentTurnHistory = [];
+      
+      let cols = 5;
+      let rows = total / cols; 
+
+      let specialItems = [];
+      for(let i = 0; i < bombs; i++) specialItems.push({t: 'b', v: 0, c: 'bg-white-special'});
+      for(let i = 0; i < 3; i++) specialItems.push({t: 'x', v: 2, c: 'bg-white-special'});
+      for(let i = 0; i < 2; i++) specialItems.push({t: 'x', v: 3, c: 'bg-white-special'});
+
+      let availablePool = [...fullStandardNumericPool];
+      shuffleArray(availablePool);
+
+      let selectedNumerics = [];
+      while(selectedNumerics.length < (total - specialItems.length) && availablePool.length > 0) {
+          selectedNumerics.push(availablePool.pop());
+      }
+
+      let allItems = [...selectedNumerics, ...specialItems];
+      shuffleArray(allItems);
+
+      let gridMatrix = Array(rows).fill(null).map(() => Array(cols).fill(null));
+      
+      allItems.forEach(item => {
+          let placed = false;
+          let attempts = 0;
+          while(!placed && attempts < 100) {
+              let r = Math.floor(Math.random() * rows);
+              let c = Math.floor(Math.random() * cols);
+              if(gridMatrix[r][c] === null) {
+                  let hasNeighborConflict = false;
+                  if(item.t === 'n') {
+                      for(let dr = -1; dr <= 1; dr++) {
+                          for(let dc = -1; dc <= 1; dc++) {
+                              let nr = r + dr, nc = c + dc;
+                              if(nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+                                  let neighbor = gridMatrix[nr][nc];
+                                  if(neighbor && neighbor.t === 'n' && (neighbor.c === item.c || neighbor.v === item.v)) {
+                                      hasNeighborConflict = true;
+                                  }
+                              }
+                          }
+                      }
+                  }
+                  if(!hasNeighborConflict || attempts > 50) {
+                      gridMatrix[r][c] = item;
+                      placed = true;
+                  }
+              }
+              attempts++;
+          }
+      });
+
+      let pool = [];
+      gridMatrix.forEach(row => row.forEach(cell => {
+          if(cell) pool.push(cell);
+          else pool.push(availablePool.pop() || {t: 'n', v: 1, c: 'bg-red'});
+      }));
+
+      grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+      pool.forEach((d, i) => {
+          const sq = document.createElement('div');
+          sq.className = 'square';
+          sq.id = 'sq-' + i;
+          sq.innerHTML = `<span class="outer-num">${i+1}</span><div class="inner-face ${d.c}">${(d.t==='b'?'0':(d.t==='x'?'x'+d.v:d.v))}</div>`;
+          
+          sq.onclick = () => {
+              playVideo();
+              if(isProcessing || sq.classList.contains('open')) return;
+              
+              const bar = document.getElementById('topBarContainer');
+              if(bar) bar.classList.add('game-started');
+
+              sq.classList.add('open');
+              openedSquaresCount++; 
+
+              currentTurnHistory.push({ id: sq.id, data: d, teamIdx: currentTeamIdx, scoreBefore: teams[currentTeamIdx].score });
+              
+              if(d.t === 'b') { 
+                  isProcessing = true;
+                  const eqDisplay = document.getElementById('equationDisplay');
+                  if(eqDisplay) eqDisplay.innerHTML = `<span style="color:#ff4d4d;">0 (تصفير)</span>`;
+                  updateAbacus(0);
+                  setTimeout(() => triggerExplosion(), 400); 
+              } else if(turnPicks.some(p => (p.c === d.c && p.t === 'n' && d.t === 'n') || (p.v === d.v && p.t === 'n' && d.t === 'n'))) {
+                  isProcessing = true; 
+                  turnPicks = []; 
+                  setTimeout(resetTurn, 1000);
+              } else { 
+                  turnPicks.push(d); 
+                  updateSum(); 
+              }
+
+              if (openedSquaresCount >= 30) {
+                  setTimeout(() => checkWinner(), 800);
+              }
+          };
+          grid.appendChild(sq);
+      });
+  }  
+
+  function checkWinner() {
+      const winnerModal = document.getElementById('winnerModal');
+      const winnerText = document.getElementById('winnerText');
+      const winnerScore = document.getElementById('winnerScore');
+
+      let winner = teams[0];
+      if (teams[1].score > teams[0].score) {
+          winner = teams[1];
+      } else if (teams[1].score === teams[0].score) {
+          winnerText.innerText = "تعادل بين الفريقين!";
+          winnerScore.innerText = `النقاط: ${winner.score}`;
+          if(winnerModal) winnerModal.classList.add('show');
+          return;
+      }
+
+      let inputLeft = document.querySelector('.hud-left-badge input');
+      let inputRight = document.querySelector('.hud-right-badge input');
+      let name1 = inputLeft ? inputLeft.value : 'فريق 1';
+      let name2 = inputRight ? inputRight.value : 'فريق 2';
+      let winnerNameStr = winner.id === 0 ? name1 : name2;
+
+      winnerText.innerText = `الفائز: ${winnerNameStr}`;
+      winnerScore.innerText = `السكور النهائي: ${winner.score}`;
+
+      if(winnerModal) winnerModal.classList.add('show');
+  }
+
+  function undoSquare() {
+      playVideo();
+      if (currentTurnHistory.length === 0) return;
+
+      let lastMove = currentTurnHistory.pop();
+      let sq = document.getElementById(lastMove.id);
+
+      if (sq) {
+          sq.classList.remove('open', 'shatter');
+          sq.style.opacity = '1';
+          openedSquaresCount--; 
+      }
+
+      teams[lastMove.teamIdx].score = lastMove.scoreBefore;
+      currentTeamIdx = lastMove.teamIdx;
+
+      if (turnPicks.length > 0) {
+          turnPicks.pop();
+      }
+
+      updateSum();
+      renderTeamsHUD();
+  }
+
+  function resetTurn() { 
+      document.querySelectorAll('.square.open').forEach(el => { el.classList.add('shatter'); el.classList.remove('open'); }); 
+      turnPicks = []; 
+      currentTeamIdx = (currentTeamIdx + 1) % teams.length; 
+      updateSum(); 
+      setTimeout(() => { isProcessing = false; renderTeamsHUD(); }, 800); 
+  }
+
+  function triggerExplosion() { 
+      if(ballsCount > 0) { 
+          ballsCount--; 
+      } 
+      playExplosionSound(); 
+      document.body.classList.add('shake'); 
+
+      const overlay = document.getElementById('bombOverlay');
+      if(overlay) overlay.classList.add('show');
+
+      setTimeout(() => { 
+          teams[currentTeamIdx].score = 0; 
+          turnPicks = []; 
+          updateSum(); 
+          if(overlay) overlay.classList.remove('show');
+          resetTurn(); 
+      }, 900); 
+  }
+
+  function playExplosionSound() { 
+      if (!audioCtx) return; 
+      const osc = audioCtx.createOscillator(); 
+      const gain = audioCtx.createGain(); 
+      osc.type = 'sawtooth'; 
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime); 
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); 
+      osc.connect(gain); 
+      gain.connect(audioCtx.destination); 
+      osc.start(); 
+      osc.stop(audioCtx.currentTime + 0.5); 
+  }
+
+  function shuffleArray(array) {
+      const randomBuffer = new Uint32Array(1);
+      for (let i = array.length - 1; i > 0; i--) {
+          window.crypto.getRandomValues(randomBuffer);
+          let randomFraction = randomBuffer[0] / (0xffffffff + 1);
+          const j = Math.floor(randomFraction * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+  }
+</script>
+</body>
+</html>
